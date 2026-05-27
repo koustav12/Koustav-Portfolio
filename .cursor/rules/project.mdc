@@ -1,0 +1,35 @@
+---
+description: Block-by-block animated website build — scope discipline, GSAP/Motion/Lenis stack, and workflow
+alwaysApply: true
+---
+
+# Animated website — project rules
+
+## Scope and generation discipline
+
+- Generate ONLY the specific block or component requested. Nothing more.
+- Do not create wrapper layouts, parent containers, page scaffolding, or boilerplate unless explicitly asked.
+- Do not modify other files or existing components.
+- Do not add example data, alternate variants, demo content, or "bonus" features.
+- Do not refactor unrelated code for consistency or style.
+- When reference HTML is pasted from inspect element, match its structure, tag choices, class names, and attributes exactly unless told otherwise.
+- Output only the code for the requested block — no surrounding explanations, no imports unless asked, no parent component shells.
+- Stop after the closing tag of the requested block.
+- Ask before adding new dependencies to package.json.
+
+## Animation library stack (strict)
+
+- Use **GSAP** (with ScrollTrigger and SplitText plugins as needed) for cursor effects, magnetic hovers, scroll sequences, and complex timelines. GSAP is fully free as of 2024.
+- Use **Motion** (`motion/react`, formerly Framer Motion) for React component animations. Prefer declarative props (`whileHover`, `whileInView`, `animate`, `layout`) over imperative refs unless orchestration requires GSAP.
+- Use **Lenis** for smooth scroll. Always sync Lenis with GSAP ScrollTrigger by calling `ScrollTrigger.update` on Lenis's scroll event, and driving Lenis via `requestAnimationFrame` or `gsap.ticker`.
+- Do NOT use: jQuery, Anime.js, Velocity, AOS, or CSS-only keyframes for advanced animations (cursor effects, scroll storytelling, magnetic hovers, page transitions). Simple state transitions like nav hover color are fine in CSS.
+- For cursor following, use `gsap.quickTo`, not `setInterval` or naive `requestAnimationFrame` loops.
+- Always clean up GSAP tweens and ScrollTrigger instances in `useEffect` cleanup or component teardown.
+- Animate `transform` and `opacity` — avoid animating layout-affecting properties (`width`, `height`, `top`, `left`).
+
+## Workflow
+
+- Build block-by-block; reference HTML from inspect element is common input.
+- Inline edit (Cmd+K) is used for surgical changes — respect the selection scope and do not touch surrounding code.
+- Placeholder comments like `<!-- BLOCK: hero -->` or `{/* BLOCK: hero */}` mark insertion points. Replace only the comment line, not surrounding markup.
+- When suggesting animation code, include cleanup logic by default.

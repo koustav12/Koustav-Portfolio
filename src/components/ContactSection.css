@@ -1,0 +1,334 @@
+/* ─── Section ───────────────────────────────────────────────────── */
+.contact-section {
+  position: relative;
+  z-index: 6;
+  background: #FFBC95;
+  padding: clamp(1.2rem, 2.5vw, 2rem);
+  min-height: 65svh;
+  display: flex;
+  align-items: stretch;
+}
+
+/* ─── Card ──────────────────────────────────────────────────────── */
+.contact-section__card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(150, 144, 141, 0.35);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  padding: clamp(1.8rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4.5rem) 0;
+}
+
+/* ─── Top row ───────────────────────────────────────────────────── */
+.contact-section__top {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+/* ─── Left: left-aligned heading ─────────────────────────────────── */
+.contact-section__left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+}
+
+.contact-section__heading {
+  margin: 0;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 6vw, 5.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: #96908D;
+}
+
+/* ─── Right: resume CTA ─────────────────────────────────────────── */
+.contact-section__right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resume-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ─── CTA pill ──────────────────────────────────────────────────── */
+.resume-cta__pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(150, 144, 141, 0.2);
+  border: 1px solid rgba(150, 144, 141, 0.4);
+  border-radius: 100px;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #96908D;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.resume-cta__pill:hover {
+  background: rgba(150, 144, 141, 0.3);
+}
+
+/* Label crossfade */
+.resume-cta__label {
+  transition: opacity 0.22s, transform 0.22s;
+  white-space: nowrap;
+}
+
+.resume-cta__label--default {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.resume-cta__label--hover {
+  position: absolute;
+  left: 2rem;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.resume-cta.is-hovered .resume-cta__label--default {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.resume-cta.is-hovered .resume-cta__label--hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── CTA circle ────────────────────────────────────────────────── */
+.resume-cta__circle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(3rem, 5.5vw, 4.5rem);
+  height: clamp(3rem, 5.5vw, 4.5rem);
+  background: rgba(150, 144, 141, 0.2);
+  border: 1px solid rgba(150, 144, 141, 0.4);
+  border-radius: 50%;
+  color: #96908D;
+  text-decoration: none;
+  flex-shrink: 0;
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  overflow: hidden;
+  transition: background 0.25s;
+}
+
+.resume-cta__circle:hover {
+  background: rgba(150, 144, 141, 0.3);
+}
+
+/* Icon crossfade */
+.resume-cta__icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.22s, transform 0.22s;
+}
+
+.resume-cta__icon--default {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.resume-cta__icon--hover {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.resume-cta.is-hovered .resume-cta__icon--default {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.resume-cta.is-hovered .resume-cta__icon--hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Divider ───────────────────────────────────────────────────── */
+.contact-section__divider {
+  height: 1px;
+  background: rgba(150, 144, 141, 0.35);
+  margin: 0 calc(-1 * clamp(2rem, 5vw, 4.5rem));
+}
+
+/* ─── Bottom row — entire strip is hover zone ────────────────────── */
+.contact-section__bottom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(6rem, 14vh, 10rem);
+  margin: 0 calc(-1 * clamp(2rem, 5vw, 4.5rem));
+  cursor: none;
+  overflow: hidden;
+}
+
+/* Rising fill */
+.contact-section__fill {
+  position: absolute;
+  inset: 0;
+  background: #96908D;
+  transform: translateY(102%);
+  transition: transform 0.12s ease-out;
+  pointer-events: none;
+}
+
+.contact-section__bottom.is-hovered .contact-section__fill {
+  transform: translateY(0);
+}
+
+/* Arrow — hides on hover */
+.contact-section__arrow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  padding: 0 clamp(1.5rem, 3vw, 3rem);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: rgba(150, 144, 141, 0.7);
+  border-right: 1px solid rgba(150, 144, 141, 0.35);
+  flex-shrink: 0;
+  opacity: 1;
+  transition: opacity 0.25s, border-color 0.25s;
+}
+
+.contact-section__bottom.is-hovered .contact-section__arrow {
+  opacity: 0;
+  border-color: transparent;
+  transition: opacity 0.08s, border-color 0.08s;
+}
+
+/* CTA right area */
+.contact-section__cta {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(2rem, 4vw, 4rem);
+}
+
+/* "Let's talk" — fades out on hover */
+.contact-section__talk-label {
+  position: absolute;
+  left: clamp(2rem, 4vw, 4rem);
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(2rem, 5.5vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgba(150, 144, 141, 0.75);
+  opacity: 1;
+  transition: opacity 0.08s;
+  white-space: nowrap;
+}
+
+.contact-section__bottom.is-hovered .contact-section__talk-label {
+  opacity: 0;
+}
+
+/* Email — left-aligned, #FFBC95 on the #96908D background */
+.contact-section__talk-email {
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #FFBC95;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.1s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.contact-section__bottom.is-hovered .contact-section__talk-email {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Custom cursor ─────────────────────────────────────────────── */
+.contact-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translate(14px, -50%);
+  opacity: 0;
+  transition: opacity 0.15s;
+  color: #FFBC95;
+}
+
+.contact-cursor.is-visible {
+  opacity: 1;
+}
+
+.contact-cursor__pill {
+  background: #FFBC95;
+  color: #96908D;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 6px 14px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* ─── Mobile ────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .contact-section__top {
+    flex-direction: column;
+  }
+
+  .contact-section__bottom {
+    cursor: pointer;
+    min-height: 5.5rem;
+  }
+
+  .contact-cursor {
+    display: none;
+  }
+
+  .contact-section__talk-label {
+    font-size: clamp(1.6rem, 8vw, 3rem);
+  }
+
+  .contact-section__talk-email {
+    font-size: clamp(0.85rem, 3.5vw, 1.4rem);
+    white-space: normal;
+    word-break: break-all;
+  }
+
+  .resume-cta__pill {
+    font-size: 0.85rem;
+    padding: 0.85rem 1.4rem;
+  }
+}

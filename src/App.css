@@ -1,0 +1,71 @@
+.app-view-switcher {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 200;
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.app-view-switcher button {
+  font: inherit;
+  font-size: 0.8125rem;
+  padding: 0.45rem 0.9rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.app-view-switcher button.is-active {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.app {
+  min-height: 100svh;
+}
+
+.site-main {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+}
+
+/* ── Stacked page layers ─────────────────────────────────────── */
+/* Each layer is sticky so it stays visible as the next slides over it. */
+.page-layer {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+.page-layer--1 {
+  position: relative; /* scrolls naturally — lets page-layer--2 push it up */
+  z-index: 1;
+  min-height: 100svh;
+  background: linear-gradient(180deg, #1a1a22 0%, #2a2830 50%, #1a1a22 100%);
+}
+
+.page-layer--3 {
+  z-index: 3;
+  background: #f0d4c8;
+}
+
+.page-halo {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(120% 60% at 50% 100%, rgba(234, 88, 12, 0.23), transparent 60%),
+    radial-gradient(80% 50% at 0% 50%, rgba(234, 88, 12, 0.17), transparent 65%),
+    radial-gradient(80% 50% at 100% 50%, rgba(234, 88, 12, 0.17), transparent 65%);
+}

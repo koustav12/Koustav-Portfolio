@@ -1,0 +1,50 @@
+/* ─── Scroll driver ─────────────────────────────────────────────── */
+.build-section-driver {
+  position: relative;
+  z-index: 5;
+  min-height: 220svh;
+}
+
+/* ─── Sticky panel ──────────────────────────────────────────────── */
+.build-section-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  background: #be6b42;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Text block ────────────────────────────────────────────────── */
+.build-section__inner {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  user-select: none;
+}
+
+.build-section__line {
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(5rem, 16vw, 15rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.18);
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* ─── Mobile ────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .build-section__line {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+    white-space: normal;
+    line-height: 1.0;
+  }
+
+  .build-section-driver {
+    min-height: 180svh;
+  }
+}

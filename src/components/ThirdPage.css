@@ -1,0 +1,74 @@
+/* ─── Scroll driver ─────────────────────────────────────────────── */
+.third-page-driver {
+  position: relative;
+  z-index: 3;
+  min-height: 300svh;
+}
+
+/* ─── Sticky panel ──────────────────────────────────────────────── */
+.third-page-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  background: #f0d4c8;
+  overflow: hidden;
+}
+
+/* ─── Content ───────────────────────────────────────────────────── */
+.third-page__inner {
+  padding: 8rem 3rem 5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.third-page__eyebrow {
+  display: block;
+  margin-bottom: 1.75rem;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #5d5a5a;
+  will-change: transform, opacity;
+}
+
+/* ─── Headline word reveal ──────────────────────────────────────── */
+.third-page__headline {
+  margin: 0;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(3rem, 9vw, 8.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-align: left;
+}
+
+.third-page__wordCell {
+  position: relative;
+  display: inline-block;
+}
+
+.third-page__word-base {
+  color: rgba(93, 90, 90, 0.22);
+}
+
+.third-page__word-hot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #5d5a5a;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  will-change: opacity;
+}
+
+@media (max-width: 720px) {
+  .third-page__inner {
+    padding: 5rem 1.25rem 3rem;
+  }
+}

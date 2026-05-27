@@ -1,0 +1,192 @@
+/* ─── Outer scroll driver ──────────────────────────────────────── */
+.projects-section-driver {
+  position: relative;
+  z-index: 4;
+  min-height: 250svh;
+}
+
+.projects-section {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  background: #f0d4c8;
+  overflow: hidden;
+}
+
+.projects-section__inner {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Section header ────────────────────────────────────────────── */
+.projects-section__header {
+  position: absolute;
+  top: clamp(3rem, 6vh, 4.5rem);
+  left: 0;
+  right: 0;
+  padding: 0 2.5rem 1rem;
+  margin: 0;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.8vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #b0b0b0;
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ─── Project stage ────────────────────────────────────────────── */
+.projects-section__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* ─── Individual project item ──────────────────────────────────── */
+.project-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: clamp(4rem, 8vh, 6rem);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* ─── Inner content wrapper ────────────────────────────────────── */
+.project-item__inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  width: min(1380px, 88%);
+}
+
+/* ─── Media tile ───────────────────────────────────────────────── */
+.project-item__tile {
+  flex: 0 0 68%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #1a1a22;
+  box-shadow:
+    0 14px 32px rgba(26, 26, 34, 0.16),
+    0 2px 6px rgba(26, 26, 34, 0.07);
+}
+
+.project-item__tile img,
+.project-item__tile video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── Info panel ───────────────────────────────────────────────── */
+.project-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-item__title {
+  margin: 0 0 0.6rem;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 2.9vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #08060d;
+}
+
+.project-item__desc {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.56vw, 1.25rem);
+  line-height: 1.65;
+  color: #5d5a5a;
+}
+
+/* ─── Mobile: flat list, no carousel ──────────────────────────── */
+@media (max-width: 640px) {
+  .projects-section {
+    min-height: auto;
+  }
+
+  .projects-section__inner {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    transform: none !important;
+  }
+
+  .projects-section__header {
+    position: static;
+    display: block;
+    padding: 2rem 1.5rem 1rem;
+  }
+
+  .projects-section__stage {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 0 1.5rem 4rem;
+  }
+
+  .project-item {
+    position: static;
+    opacity: 1 !important;
+    display: block;
+  }
+
+  .project-item__inner {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .project-item__tile {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* ─── Progress dots ────────────────────────────────────────────── */
+.projects-section__dots {
+  position: absolute;
+  left: max(8px, calc((100% - min(1380px, 88%)) / 2 - 22px));
+  top: 50svh;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.projects-section__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #08060d;
+  opacity: 0.2;
+  will-change: opacity, transform;
+}
+
+/* ─── Reduced motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .project-item {
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-section__dots {
+    display: none;
+  }
+}

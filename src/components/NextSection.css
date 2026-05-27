@@ -1,0 +1,73 @@
+.next-section-driver {
+  position: relative;
+  z-index: 2;
+  min-height: 400svh;
+}
+
+.next-section {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  background: #f0d4c8;
+}
+
+.next-section__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 3rem;
+  overflow: visible;
+}
+
+.next-section__copy {
+  margin: 0;
+  position: relative;
+  width: max-content;
+  max-width: 92vw;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 6.5vw, 7rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  text-align: left;
+}
+
+.next-section__line {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.35em;
+  row-gap: 0.12em;
+  align-items: baseline;
+}
+
+.next-section__wordCell {
+  position: relative;
+  display: inline-block;
+}
+
+.next-section__word-base {
+  color: #5d5a5a;
+}
+
+.next-section__word-hot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: hsl(26, 72%, 72%);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  will-change: opacity;
+}
+
+@media (max-width: 640px) {
+  .next-section__inner {
+    padding: 5rem 1.5rem;
+  }
+}

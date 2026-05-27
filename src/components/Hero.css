@@ -1,0 +1,90 @@
+.hero {
+  position: relative;
+  z-index: 3;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero__tag {
+  position: absolute;
+  top: 50%;
+  left: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #f0d4c8;
+  z-index: 2;
+}
+
+.hero__tag-line {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero__tag-char,
+.hero__tag-dot {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.hero__tag-dot {
+  margin-left: 0.02em;
+}
+
+.hero__name {
+  position: absolute;
+  bottom: -0.04em;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(5rem, 17vw, 18rem);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  color: #f0d4c8;
+  z-index: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hero__name-word {
+  display: inline-block;
+}
+
+.hero__name-char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero__name-word--left .hero__name-char {
+  transform-origin: left center;
+}
+
+.hero__name-word--right .hero__name-char {
+  transform-origin: right center;
+}
+
+@media (max-width: 900px) {
+  .hero__tag {
+    left: 1.25rem;
+    font-size: clamp(1.2rem, 5vw, 1.75rem);
+  }
+
+  .hero__name {
+    padding: 0 1.25rem;
+    font-size: clamp(3rem, 18vw, 8rem);
+  }
+}
