@@ -1,23 +1,47 @@
 import { useCallback, useEffect, useRef, type MouseEvent } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import gsap from 'gsap'
-import { AnimatedNavLink } from './AnimatedNavLink'
+import { useSplitTextHover } from '../hooks/useSplitTextHover'
 import { SplitLetters } from './SplitLetters'
 
 type NavPillProps = {
   logo: React.ReactNode
 }
 
+/** Internal nav link that uses React Router Link + split-text hover animation */
+function PillLink({
+  to,
+  className,
+  children,
+  onMouseEnter,
+}: {
+  to: string
+  className: string
+  children: React.ReactNode
+  onMouseEnter?: (e: MouseEvent<HTMLAnchorElement>) => void
+}) {
+  const ref = useRef<HTMLAnchorElement>(null)
+  useSplitTextHover(ref)
+  return (
+    <Link ref={ref} to={to} className={className} onMouseEnter={onMouseEnter}>
+      {children}
+    </Link>
+  )
+}
+
 export function NavPill({ logo }: NavPillProps) {
-  const pillRef = useRef<HTMLDivElement>(null)
+  const pillRef      = useRef<HTMLDivElement>(null)
   const indicatorRef = useRef<HTMLDivElement>(null)
-  const iconRef = useRef<HTMLDivElement>(null)
+  const iconRef      = useRef<HTMLDivElement>(null)
+  const { pathname } = useLocation()
+  const isAbout      = pathname === '/about'
 
   const moveIndicator = useCallback((target: HTMLElement) => {
-    const pill = pillRef.current
+    const pill      = pillRef.current
     const indicator = indicatorRef.current
     if (!pill || !indicator) return
 
-    const pillRect = pill.getBoundingClientRect()
+    const pillRect   = pill.getBoundingClientRect()
     const targetRect = target.getBoundingClientRect()
 
     gsap.to(indicator, {
@@ -30,12 +54,16 @@ export function NavPill({ logo }: NavPillProps) {
   }, [])
 
   useEffect(() => {
-    const logoLink = pillRef.current?.querySelector<HTMLElement>('.nav-pill__link--logo')
-    if (!logoLink) return
+    const pill = pillRef.current
+    if (!pill) return
+
+    const defaultSelector = isAbout ? '.nav-pill__link--about' : '.nav-pill__link--logo'
+    const defaultLink = pill.querySelector<HTMLElement>(defaultSelector)
+    if (!defaultLink) return
 
     const setInitial = () => {
       if (indicatorRef.current) gsap.set(indicatorRef.current, { opacity: 1 })
-      moveIndicator(logoLink)
+      moveIndicator(defaultLink)
     }
     setInitial()
     window.addEventListener('resize', setInitial)
@@ -44,7 +72,7 @@ export function NavPill({ logo }: NavPillProps) {
       window.removeEventListener('resize', setInitial)
       gsap.killTweensOf(indicatorRef.current)
     }
-  }, [moveIndicator])
+  }, [moveIndicator, isAbout])
 
   const onLogoEnter = (e: MouseEvent<HTMLAnchorElement>) => {
     moveIndicator(e.currentTarget)
@@ -60,40 +88,42 @@ export function NavPill({ logo }: NavPillProps) {
   }
 
   const onPillLeave = () => {
-    const logoLink = pillRef.current?.querySelector<HTMLElement>('.nav-pill__link--logo')
-    if (logoLink) moveIndicator(logoLink)
+    const pill = pillRef.current
+    if (!pill) return
+    const defaultSelector = isAbout ? '.nav-pill__link--about' : '.nav-pill__link--logo'
+    const defaultLink = pill.querySelector<HTMLElement>(defaultSelector)
+    if (defaultLink) moveIndicator(defaultLink)
   }
 
   return (
     <div className="nav-pill" ref={pillRef} onMouseLeave={onPillLeave}>
       <div className="nav-pill__indicator" ref={indicatorRef} aria-hidden="true" />
-      <AnimatedNavLink
-        href="/about"
-        className="nav-pill__link nav-link is-peach"
-        aria-label="About"
+
+      <PillLink
+        to="/about"
+        className="nav-pill__link nav-pill__link--about nav-link is-peach"
         onMouseEnter={(e) => moveIndicator(e.currentTarget)}
       >
         <SplitLetters text="About" />
-      </AnimatedNavLink>
-      <AnimatedNavLink
-        href="/"
-        aria-current="page"
+      </PillLink>
+
+      <PillLink
+        to="/"
         className="nav-pill__link nav-pill__link--logo w-inline-block w--current"
         onMouseEnter={onLogoEnter}
-        onMouseLeave={onLogoLeave}
       >
-        <div className="jm-icon" ref={iconRef}>
+        <div className="jm-icon" ref={iconRef} onMouseLeave={onLogoLeave}>
           {logo}
         </div>
-      </AnimatedNavLink>
-      <AnimatedNavLink
-        href="/work"
+      </PillLink>
+
+      <PillLink
+        to="/work"
         className="nav-pill__link nav-link is-peach"
-        aria-label="Work"
         onMouseEnter={(e) => moveIndicator(e.currentTarget)}
       >
         <SplitLetters text="Work" />
-      </AnimatedNavLink>
+      </PillLink>
     </div>
   )
 }

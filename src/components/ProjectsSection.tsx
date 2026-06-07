@@ -27,9 +27,19 @@ export function ProjectsSection() {
       return
     }
 
-    gsap.set(items, { opacity: 0, y: 30, scale: 0.96 })
+    // Tile 1 starts visible (no entrance animation); tiles 2 & 3 start hidden
+    gsap.set(items, { opacity: 0, y: 28, scale: 0.97 })
+    gsap.set(items[0], { opacity: 1, y: 0, scale: 1 })
 
-    let lastSeg = -2
+    // Dot 0 active by default
+    dots.forEach((d, i) => {
+      if (!d) return
+      d.style.opacity   = i === 0 ? '1'           : '0.2'
+      d.style.transform = i === 0 ? 'scale(1.65)' : 'scale(1)'
+    })
+
+    // shownTile tracks which tile is currently on screen
+    let shownTile = 0
 
     const tick = () => {
       if (window.innerWidth <= 640) return
@@ -40,44 +50,40 @@ export function ProjectsSection() {
 
       const raw = clamp(0, 1, -rect.top / scrollable)
 
-      const newSeg: number = raw < DELAY
-        ? -1
+      // Before DELAY maps to segment 0 so tile 1 always stays pinned
+      const seg: number = raw < DELAY
+        ? 0
         : raw >= 1
           ? 2
           : Math.floor(clamp(0, 2.999, (clamp(0, 1, (raw - DELAY) / (1 - DELAY))) * 3))
 
-      if (newSeg === lastSeg) return
+      if (seg === shownTile) return
 
-      const forward = newSeg > lastSeg
+      const prev    = shownTile
+      const forward = seg > prev
 
-      for (let i = 0; i < items.length; i++) {
-        if (i === newSeg) {
-          if (i === 0) {
-            // project 1: no entrance animation — snap in
-            gsap.set(items[i], { opacity: 1, y: 0, scale: 1 })
-          } else {
-            gsap.to(items[i], {
-              opacity: 1, y: 0, scale: 1,
-              duration: 0.55, ease: 'power3.out', overwrite: true,
-            })
-          }
-        } else if (i === lastSeg) {
-          gsap.to(items[i], {
-            opacity: 0,
-            y: forward ? -30 : 30,
-            scale: forward ? 1.03 : 0.96,
-            duration: 0.4, ease: 'power2.in', overwrite: true,
-          })
-        }
+      // Exit the outgoing tile (all tiles exit, including tile 1)
+      gsap.to(items[prev], {
+        opacity: 0,
+        y: forward ? -28 : 28,
+        scale: forward ? 1.02 : 0.97,
+        duration: 0.55, ease: 'power2.inOut', overwrite: true,
+      })
 
-        const dot = dots[i]
-        if (dot) {
-          dot.style.opacity   = i === newSeg ? '1'           : '0.2'
-          dot.style.transform = i === newSeg ? 'scale(1.65)' : 'scale(1)'
-        }
-      }
+      // Enter the incoming tile
+      gsap.to(items[seg], {
+        opacity: 1, y: 0, scale: 1,
+        duration: 0.7, ease: 'power2.out', overwrite: true,
+      })
 
-      lastSeg = newSeg
+      // Update dots
+      dots.forEach((d, i) => {
+        if (!d) return
+        d.style.opacity   = i === seg ? '1'           : '0.2'
+        d.style.transform = i === seg ? 'scale(1.65)' : 'scale(1)'
+      })
+
+      shownTile = seg
     }
 
     gsap.ticker.add(tick)
@@ -98,11 +104,11 @@ export function ProjectsSection() {
 
   return (
     <div className="projects-section-driver" ref={driverRef}>
-    <section className="projects-section" ref={sectionRef} aria-label="Work I've shipped">
+    <section className="projects-section" ref={sectionRef} aria-label="Projects I've shipped">
       <div className="projects-section__inner" ref={innerRef}>
 
-        <h2 className="projects-section__header" aria-label="Work I've shipped">
-          Work I've shipped
+        <h2 className="projects-section__header" aria-label="Projects I've shipped">
+          Projects I've shipped
         </h2>
 
         <div className="projects-section__stage">

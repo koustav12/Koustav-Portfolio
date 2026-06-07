@@ -1,0 +1,448 @@
+/* ─── Scroll driver ─────────────────────────────────────────────── */
+.about-driver {
+  position: relative;
+  z-index: 2;
+  min-height: 480svh;
+  background: #f5f0ec;
+  color-scheme: light;
+}
+
+/* ─── Sticky background panel ───────────────────────────────────── */
+.about-bg-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ─── Diffused orange glow ───────────────────────────────────────── */
+.about-bg__orange {
+  position: absolute;
+  left: -40%;
+  right: -40%;
+  bottom: -20%;
+  height: 150%;
+  background: radial-gradient(
+    ellipse 55% 65% at 50% 100%,
+    rgba(255, 188, 149, 1.0)  0%,
+    rgba(255, 188, 149, 0.82) 22%,
+    rgba(255, 188, 149, 0.50) 48%,
+    rgba(255, 188, 149, 0.18) 68%,
+    transparent               82%
+  );
+  transform-origin: bottom center;
+  transform: scale(0.45);
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+/* ─── Concentric rings ───────────────────────────────────────────
+   4 rings alternating green / blue. All centered at the panel's
+   bottom edge. Sized so at scale ≈ 0.72 ring 4 exits the viewport.
+   Starting scale is 0.62 so arcs are already a visible size when
+   they first appear.                                                */
+.about-bg__ring {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+  opacity: 0;
+  z-index: 2;
+}
+
+/* Ring 1 — green, diameter 100vw, center at panel bottom */
+.about-bg__ring--1 {
+  width: 100vw;
+  height: 100vw;
+  bottom: -50vw;
+  left: 50%;
+  margin-left: -50vw;
+  background: radial-gradient(
+    circle,
+    transparent               64%,
+    rgba( 80, 200, 120, 0.90) 72%,
+    rgba(120, 230, 100, 0.75) 82%,
+    transparent               92%
+  );
+  filter: blur(18px);
+  transform: scale(0.62);
+}
+
+/* Ring 2 — blue, diameter 160vw, 30vw gap from ring 1 */
+.about-bg__ring--2 {
+  width: 160vw;
+  height: 160vw;
+  bottom: -80vw;
+  left: 50%;
+  margin-left: -80vw;
+  background: radial-gradient(
+    circle,
+    transparent               68%,
+    rgba( 70, 150, 245, 0.90) 75%,
+    rgba(140, 130, 245, 0.75) 84%,
+    transparent               93%
+  );
+  filter: blur(20px);
+  transform: scale(0.62);
+}
+
+/* Ring 3 — green, diameter 220vw, 30vw gap from ring 2 */
+.about-bg__ring--3 {
+  width: 220vw;
+  height: 220vw;
+  bottom: -110vw;
+  left: 50%;
+  margin-left: -110vw;
+  background: radial-gradient(
+    circle,
+    transparent               70%,
+    rgba( 80, 200, 120, 0.85) 77%,
+    rgba(120, 230, 100, 0.70) 85%,
+    transparent               94%
+  );
+  filter: blur(22px);
+  transform: scale(0.62);
+}
+
+/* Ring 4 — blue, diameter 280vw, 30vw gap from ring 3 */
+.about-bg__ring--4 {
+  width: 280vw;
+  height: 280vw;
+  bottom: -140vw;
+  left: 50%;
+  margin-left: -140vw;
+  background: radial-gradient(
+    circle,
+    transparent               72%,
+    rgba( 70, 150, 245, 0.85) 78%,
+    rgba(140, 130, 245, 0.70) 86%,
+    transparent               95%
+  );
+  filter: blur(24px);
+  transform: scale(0.62);
+}
+
+/* ─── Hero headline — scrolls away naturally ────────────────────── */
+.about-hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100svh;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Inner wrapper — centers and constrains the text block */
+.about-hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: auto;
+}
+
+/* First line: logo tile + "Product manager" on the same baseline */
+.about-hero__first-line {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.6rem, 1.2vw, 1.1rem);
+  line-height: 1.08;
+}
+
+.about-hero__logo-tile {
+  flex-shrink: 0;
+  width: clamp(44px, 5.2vw, 70px);
+  height: clamp(44px, 5.2vw, 70px);
+  background: #ffffff;
+  border-radius: clamp(9px, 1.1vw, 14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.about-hero__logo-svg {
+  width: 70%;
+  height: 70%;
+}
+
+.about-hero__title-line1 {
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(3rem, 8.5vw, 8rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #6e6a66;
+}
+
+/* Lines 2 & 3 — indented to sit under the text, not under the logo */
+.about-hero__title-rest {
+  margin: 0;
+  padding-left: calc(clamp(44px, 5.2vw, 70px) + clamp(0.6rem, 1.2vw, 1.1rem));
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(3rem, 8.5vw, 8rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #6e6a66;
+}
+
+/* ─── Two-column content sections ──────────────────────────────── */
+.about-content {
+  position: relative;
+  z-index: 2;
+  background: #f5f0ec;
+  padding-top: clamp(3rem, 6vh, 5rem);
+  color-scheme: light;
+}
+
+/* Dissolve the top edge into the scroll section above */
+.about-content::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: clamp(60px, 10vh, 140px);
+  background: linear-gradient(to bottom, transparent 0%, #f5f0ec 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-content__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(2rem, 6vw, 5rem);
+}
+
+/* Each section row */
+.about-section {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding: clamp(3rem, 6vh, 5rem) 0;
+  border-top: 1px solid rgba(110, 106, 102, 0.15);
+}
+
+.about-section:last-child {
+  border-bottom: 1px solid rgba(110, 106, 102, 0.15);
+}
+
+/* Left column: section label */
+.about-section__label-col {
+  padding-top: 0.15em;
+}
+
+.about-section__label {
+  margin: 0;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #c85a1a;
+}
+
+/* Right column: body text */
+.about-section__body-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.about-section__para {
+  margin: 0;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.75;
+  color: #3d3835;
+}
+
+/* ─── Mobile ─────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .about-hero {
+    padding: 0 1.5rem;
+  }
+
+  /* Mobile ring sizes — wider relative to viewport for phone screens */
+  .about-bg__ring--1 { width: 160vw;  height: 160vw;  bottom: -80vw;  margin-left: -80vw; }
+  .about-bg__ring--2 { width: 240vw;  height: 240vw;  bottom: -120vw; margin-left: -120vw; }
+  .about-bg__ring--3 { width: 320vw;  height: 320vw;  bottom: -160vw; margin-left: -160vw; }
+  .about-bg__ring--4 { width: 400vw;  height: 400vw;  bottom: -200vw; margin-left: -200vw; }
+
+  .about-section {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .about-content__inner {
+    padding: 0 1.5rem;
+  }
+}
+
+/* ─── Work Experience section ────────────────────────────────────── */
+.workex-section {
+  background: #f5f0ec;
+  padding: 0 0 clamp(4rem, 8vh, 7rem);
+  color-scheme: light;
+}
+
+.workex-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(2rem, 6vw, 5rem);
+}
+
+.workex-heading {
+  margin: 0 0 clamp(2rem, 4vh, 3rem);
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  letter-spacing: -0.02em;
+  color: #c85a1a;
+  border-top: 1px solid rgba(110, 106, 102, 0.15);
+  padding-top: clamp(2.5rem, 5vh, 4rem);
+}
+
+/* Two-panel grid */
+.workex-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: start;
+}
+
+.workex-grid .workex-card:first-child {
+  padding-right: clamp(1.5rem, 3vw, 3rem);
+  border-right: 1px solid rgba(110, 106, 102, 0.15);
+}
+
+.workex-grid .workex-card:last-child {
+  padding-left: clamp(1.5rem, 3vw, 3rem);
+}
+
+/* Card — no border box */
+.workex-card {
+  padding: clamp(1.8rem, 3vw, 2.8rem) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* Logo row — same height for both cards so they align */
+.workex-card__logo-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 0.9rem);
+  height: clamp(60px, 7vw, 90px);
+}
+
+/* Oracle card — no extra override needed, same row height */
+
+.workex-card__logo-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Oracle wordmark fills its taller row */
+.workex-card__logo-img--wide {
+  height: 100%;
+  width: auto;
+}
+
+/* Illustrator app icon — add subtle radius to match its rounded rect shape */
+.workex-card__logo-img--icon {
+  border-radius: clamp(6px, 0.8vw, 10px);
+}
+
+.workex-card__logo-cross {
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  color: rgba(110, 106, 102, 0.4);
+  line-height: 1;
+  user-select: none;
+}
+
+/* Text block */
+.workex-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.workex-card__company {
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(0.78rem, 1.1vw, 0.88rem);
+  font-weight: 500;
+  color: #c85a1a;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.workex-card__role {
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  letter-spacing: -0.015em;
+  color: #3d3835;
+  line-height: 1.2;
+}
+
+.workex-card__tenure {
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(0.78rem, 1.1vw, 0.88rem);
+  color: #9a9390;
+  margin-top: 0.1rem;
+}
+
+.workex-card__desc {
+  margin: 0.8rem 0 0;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(0.9rem, 1.3vw, 1rem);
+  line-height: 1.72;
+  color: #5d5a56;
+}
+
+@media (max-width: 720px) {
+  .workex-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workex-grid .workex-card:first-child {
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .workex-grid .workex-card:last-child {
+    padding-left: 0;
+  }
+
+  .workex-inner {
+    padding: 0 1.5rem;
+  }
+}
+
+/* ─── Education logo overrides ───────────────────────────────────── */
+
+/* IIMA logo is transparent — no background needed */
+.workex-card__logo-img--iima {
+  height: 100%;
+  width: auto;
+}
+
+/* Jadavpur seal — transparent PNG, no blend needed */
+.workex-card__logo-img--ju {
+  height: 100%;
+  width: auto;
+}
+
+/* Education section spacing — sits below workex, same background */
+.edu-section {
+  padding-top: 0;
+}

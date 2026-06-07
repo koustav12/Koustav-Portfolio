@@ -16,19 +16,24 @@
 
 /* ─── Content ───────────────────────────────────────────────────── */
 .third-page__inner {
-  padding: 8rem 3rem 5rem;
+  position: absolute;
+  inset: 0;
+  padding: 6rem 3rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
+/* ─── Role label ────────────────────────────────────────────────── */
 .third-page__eyebrow {
   display: block;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
   font-family: var(--sans, system-ui, sans-serif);
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 1.15rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
-  color: #5d5a5a;
+  color: #c85a1a;
   will-change: transform, opacity;
 }
 
@@ -41,11 +46,17 @@
   line-height: 1.08;
   letter-spacing: -0.03em;
   text-align: left;
+  will-change: transform;
 }
 
 .third-page__wordCell {
   position: relative;
   display: inline-block;
+}
+
+/* Fix: add word spacing between cells */
+.third-page__wordCell:not(:last-child) {
+  margin-right: 0.28em;
 }
 
 .third-page__word-base {
@@ -69,6 +80,6 @@
 
 @media (max-width: 720px) {
   .third-page__inner {
-    padding: 5rem 1.25rem 3rem;
+    padding: 5rem 1.25rem;
   }
 }

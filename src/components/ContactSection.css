@@ -4,7 +4,7 @@
   z-index: 6;
   background: #FFBC95;
   padding: clamp(1.2rem, 2.5vw, 2rem);
-  min-height: 65svh;
+  min-height: 100svh;
   display: flex;
   align-items: stretch;
 }
@@ -180,7 +180,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: clamp(6rem, 14vh, 10rem);
+  min-height: clamp(10rem, 28vh, 18rem);
   margin: 0 calc(-1 * clamp(2rem, 5vw, 4.5rem));
   cursor: none;
   overflow: hidden;

@@ -14,25 +14,28 @@
 }
 
 .projects-section__inner {
-  position: relative;
-  height: 100%;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2.5rem;
 }
 
-/* ─── Section header ────────────────────────────────────────────── */
+/* ─── Section header — in flow above the project stage ──────────── */
 .projects-section__header {
-  position: absolute;
-  top: clamp(3rem, 6vh, 4.5rem);
-  left: 0;
-  right: 0;
-  padding: 0 2.5rem 1rem;
+  position: relative;
   margin: 0;
+  padding: 0 0 1.25rem;
+  width: min(1380px, 88%);
   font-family: var(--heading, system-ui, sans-serif);
   font-weight: 800;
   font-size: clamp(1.2rem, 2.8vw, 2.8rem);
   line-height: 1.1;
   letter-spacing: -0.025em;
-  color: #b0b0b0;
+  color: #5d5a5a;
   text-align: center;
   z-index: 2;
   pointer-events: none;
@@ -40,11 +43,11 @@
 
 /* ─── Project stage ────────────────────────────────────────────── */
 .projects-section__stage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  width: min(1380px, 88%);
+  /* height = 16:9 tile at 68% of stage width + some room for the info panel */
+  aspect-ratio: 16 / 9;
+  max-height: 56vh;
 }
 
 /* ─── Individual project item ──────────────────────────────────── */
@@ -54,7 +57,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: clamp(4rem, 8vh, 6rem);
   opacity: 0;
   will-change: opacity, transform;
 }
@@ -111,6 +113,28 @@
   color: #5d5a5a;
 }
 
+/* ─── Progress dots ────────────────────────────────────────────── */
+.projects-section__dots {
+  position: absolute;
+  left: max(8px, calc((100% - min(1380px, 88%)) / 2 - 22px));
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.projects-section__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #08060d;
+  opacity: 0.2;
+  will-change: opacity, transform;
+}
+
 /* ─── Mobile: flat list, no carousel ──────────────────────────── */
 @media (max-width: 640px) {
   .projects-section {
@@ -119,19 +143,26 @@
 
   .projects-section__inner {
     position: relative;
+    inset: auto;
     height: auto;
     overflow: visible;
+    display: block;
+    padding: 0;
     transform: none !important;
   }
 
   .projects-section__header {
-    position: static;
     display: block;
+    width: auto;
     padding: 2rem 1.5rem 1rem;
+    font-size: clamp(1.2rem, 2.8vw, 2.8rem);
   }
 
   .projects-section__stage {
     position: static;
+    aspect-ratio: auto;
+    max-height: none;
+    width: auto;
     display: flex;
     flex-direction: column;
     gap: 3rem;
@@ -154,39 +185,15 @@
     flex: none;
     width: 100%;
   }
-}
 
-/* ─── Progress dots ────────────────────────────────────────────── */
-.projects-section__dots {
-  position: absolute;
-  left: max(8px, calc((100% - min(1380px, 88%)) / 2 - 22px));
-  top: 50svh;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.projects-section__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #08060d;
-  opacity: 0.2;
-  will-change: opacity, transform;
+  .projects-section__dots {
+    display: none;
+  }
 }
 
 /* ─── Reduced motion ───────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .project-item {
     opacity: 1 !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .projects-section__dots {
-    display: none;
   }
 }
