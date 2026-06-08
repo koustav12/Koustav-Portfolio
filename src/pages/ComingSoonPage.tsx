@@ -7,7 +7,6 @@ export function ComingSoonPage() {
   return (
     <div className="cs-page">
       <div className="cs-content">
-        <p className="cs-eyebrow">Behance</p>
         <h1 className="cs-headline">
           Coming<br />Soon
         </h1>
