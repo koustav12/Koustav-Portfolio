@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.25rem 2.5rem 0;
+  padding: 0.7rem 2rem 0;
   pointer-events: none;
 }
 
@@ -49,7 +49,7 @@
 .site-header .is-peach {
   color: #f0d4c8;
   font-family: var(--sans, system-ui, sans-serif);
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   text-decoration: none;
@@ -150,8 +150,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2rem;
-  padding: 0.35rem 0.95rem;
+  min-height: 1.65rem;
+  padding: 0.22rem 0.75rem;
   line-height: 1;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.07);
@@ -175,8 +175,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2rem;
-  padding: 0.35rem 0.95rem;
+  min-height: 1.65rem;
+  padding: 0.22rem 0.75rem;
   line-height: 1;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.07);
@@ -200,8 +200,8 @@
 }
 
 .site-header .jm-icon {
-  width: 2.35rem;
-  height: 3.6rem;
+  width: 1.8rem;
+  height: 2.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,7 +220,7 @@
 
 @media (max-width: 900px) {
   .site-header {
-    padding: 1rem 1.25rem 0;
+    padding: 0.6rem 1.25rem 0;
   }
 
   .site-header .nav-social-wrapper .cont-social-link:nth-child(1) {

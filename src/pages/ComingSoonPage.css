@@ -1,0 +1,102 @@
+/* ─── Full-page dark canvas (matches home page palette) ─────────── */
+.cs-page {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #1a1a22 0%, #2a2830 60%, #1a1a22 100%);
+  color-scheme: dark;
+  padding: 2rem;
+}
+
+.cs-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+  max-width: 700px;
+  width: 100%;
+}
+
+.cs-eyebrow {
+  margin: 0;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240, 212, 200, 0.5);
+}
+
+.cs-headline {
+  margin: 0;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(5rem, 15vw, 13rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: #f0d4c8;
+}
+
+.cs-sub {
+  margin: 0;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.65;
+  color: rgba(240, 212, 200, 0.55);
+  max-width: 36ch;
+}
+
+/* ─── Back to home button ────────────────────────────────────────── */
+.cs-back {
+  margin-top: 1rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  height: 3rem;
+  padding: 0 1.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(240, 212, 200, 0.2);
+  background: transparent;
+  color: #f0d4c8;
+  font-family: var(--sans, system-ui, sans-serif);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Arrow hidden by default */
+.cs-back__arrow {
+  position: absolute;
+  left: 1.4rem;
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Label visible by default */
+.cs-back__label {
+  transition: opacity 0.25s ease;
+}
+
+/* Hover: blue background, text vanishes, arrow appears */
+.cs-back:hover {
+  background: #2e54fe;
+  border-color: #2e54fe;
+  color: #ffffff;
+}
+
+.cs-back:hover .cs-back__label {
+  opacity: 0;
+}
+
+.cs-back:hover .cs-back__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}

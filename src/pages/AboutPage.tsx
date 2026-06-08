@@ -1,54 +1,43 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { ContactSection } from '../components/ContactSection'
+import { asset } from '../utils/asset'
 import './AboutPage.css'
 
 const clamp = (min: number, max: number, v: number) => Math.max(min, Math.min(max, v))
 
 const ORANGE_FILL_END   = 0.35
-const RINGS_START       = 0.20
-const RINGS_END         = 0.80
+const RINGS_START       = 0.00
+const RINGS_END         = 0.82
 const ORANGE_FADE_START = 0.68
 const ORANGE_FADE_END   = 0.90
 
 const ABOUT_SECTIONS = [
   {
     id: 'who',
-    heading: 'Who I Am',
-    paragraphs: [
-      "I'm Koustav Saha, a Product Manager at Adobe Illustrator, based in India. I focus on bringing generative AI capabilities to the world's most powerful design canvas — helping millions of designers create more efficiently and expressively.",
-      "My work sits at the intersection of cutting-edge AI research and real-world creative workflows. I care deeply about building tools that feel intuitive, powerful, and worthy of the professionals who depend on them every day.",
-    ],
-  },
-  {
-    id: 'workex',
-    heading: 'My Work Experience',
-    paragraphs: [
-      "Currently, I lead product strategy for Generative AI features at Adobe Illustrator, defining the core interaction model and quality bar for what 'good' looks like when AI meets professional design.",
-      "Before this, I worked across early-stage product development — shipping features used by millions of creatives globally and building the cross-functional muscle to move from ambiguous idea to polished launch.",
-    ],
-  },
-  {
-    id: 'education',
-    heading: 'My Education',
-    paragraphs: [
-      "I hold a degree in [Field] from [University]. My academic background gave me a strong foundation in systems thinking and human-centered design — skills I apply every day to make complex AI technology feel accessible and natural.",
-      "Beyond formal education, I've been shaped by the craft of building products alongside exceptional designers, engineers, and researchers who push me to raise the bar on every decision.",
+    label: 'Who I Am',
+    body: [
+      "I'm Koustav Saha, a Product Manager at Adobe Illustrator with a deep passion for building creative tools that empower designers at every level — from students to professionals.",
+      "Over the past 7 years, I've worked at the intersection of design, technology, and business — shipping products that millions of creators depend on every single day.",
+      "I moved to product management from an engineering background, which means I think in systems and flows, but stay grounded in what the experience actually feels like to use.",
     ],
   },
   {
     id: 'approach',
-    heading: 'My PM Approach',
-    paragraphs: [
-      "I start by deeply understanding the user and their workflow — not just what they do, but why it matters to them. I look for the simplest solution that delivers the most value, then work closely with design, engineering, and research to define what 'good' looks like before writing a single line of spec.",
-      "I believe clarity is a superpower. A well-framed problem saves more time than any perfectly written PRD. I invest in making sure the whole team sees the same north star.",
+    label: 'My PM Approach',
+    body: [
+      "I start with the user's job-to-be-done — not the feature request. Understanding the real problem before writing a single line of spec is non-negotiable for me.",
+      "From there, I define success in outcomes rather than outputs: what changes in user behaviour tells us we shipped the right thing?",
+      "I work closely with design, engineering, data science, and research as a collaborative partner — not a gatekeeper. The best product decisions come from diverse perspectives.",
     ],
   },
   {
     id: 'philosophy',
-    heading: 'My PM Philosophy',
-    paragraphs: [
-      "Great products feel inevitable in hindsight. My job is to reduce ambiguity, enable the team, and protect the quality of the outcome — even when the path is unclear.",
-      "Speed of learning matters more than speed of shipping. I'd rather ship a smaller thing that teaches us something real than a large thing that answers no questions. Strong opinions, held loosely.",
+    label: 'My PM Philosophy',
+    body: [
+      "Great products are built at the intersection of deep user empathy, technical possibility, and business viability — and holding all three in tension is the core of the PM craft.",
+      "I believe in shipping to learn. A good hypothesis tested in the market beats a perfect plan on paper every time.",
+      "And ultimately — I believe the best technology disappears. It gets out of the way and lets the person using it feel more capable, more creative, and more themselves.",
     ],
   },
 ]
@@ -86,6 +75,30 @@ export function AboutPage() {
     return () => headerEl.classList.remove('is-on-white')
   }, [])
 
+  // Animate workex + edu cards in when they enter the viewport
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const cards = document.querySelectorAll<HTMLElement>('[data-workex]')
+    cards.forEach((card, i) => {
+      card.style.opacity = '0'
+      card.style.transform = 'translateY(40px)'
+      card.style.transition = `opacity 0.7s ease ${i * 0.15}s, transform 0.7s ease ${i * 0.15}s`
+    })
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const el = e.target as HTMLElement
+          el.style.opacity = '1'
+          el.style.transform = 'translateY(0)'
+          observer.unobserve(el)
+        }
+      }),
+      { threshold: 0.15 }
+    )
+    cards.forEach((c) => observer.observe(c))
+    return () => observer.disconnect()
+  }, [])
+
   useEffect(() => {
     const driver = driverRef.current
     const orange = orangeRef.current
@@ -94,40 +107,46 @@ export function AboutPage() {
     const ring3  = ring3Ref.current
     const ring4  = ring4Ref.current
     if (!driver || !orange || !ring1 || !ring2 || !ring3 || !ring4) return
-    const rings  = [ring1, ring2, ring3, ring4]
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       orange.style.opacity = '0'
-      rings.forEach((r) => { r.style.opacity = '1'; r.style.transform = 'scale(1.2)' })
+      ;[ring1, ring2, ring3, ring4].forEach((r) => {
+        r.style.opacity = '1'
+        r.style.transform = 'scale(1.5)'
+      })
       return
     }
 
-    // Rings start at a visible scale so the arcs are immediately apparent
     orange.style.transform = 'scale(0.45)'
     orange.style.opacity   = '1'
-    rings.forEach((r) => { r.style.opacity = '0'; r.style.transform = 'scale(0.4)' })
+    ;[ring1, ring2, ring3, ring4].forEach((r) => {
+      r.style.opacity   = '0'
+      r.style.transform = 'scale(0.62)'
+    })
 
     const tick = () => {
       const rect       = driver.getBoundingClientRect()
       const scrollable = driver.offsetHeight - window.innerHeight
       if (scrollable <= 0) return
-      const progress   = clamp(0, 1, -rect.top / scrollable)
 
-      // Orange: fill in, then fade out when rings exit
-      const fillP   = clamp(0, 1, progress / ORANGE_FILL_END)
-      const fadeP   = clamp(0, 1, (progress - ORANGE_FADE_START) / (ORANGE_FADE_END - ORANGE_FADE_START))
-      orange.style.transform = `scale(${0.45 + fillP * 0.55})`
-      orange.style.opacity   = String(1 - fadeP)
+      const progress = clamp(0, 1, -rect.top / scrollable)
 
-      // All four rings scale together, staggered fade-in
+      const orangeFillP = clamp(0, 1, progress / ORANGE_FILL_END)
+      orange.style.transform = `scale(${0.45 + orangeFillP * 0.55})`
+
+      const orangeFadeP = clamp(0, 1, (progress - ORANGE_FADE_START) / (ORANGE_FADE_END - ORANGE_FADE_START))
+      orange.style.opacity = String(1 - orangeFadeP)
+
       const ringsP    = clamp(0, 1, (progress - RINGS_START) / (RINGS_END - RINGS_START))
-      const ringScale = 0.4 + ringsP * 1.0   // 0.4 → 1.4 (ring 4 exits at ~0.72)
+      const ringScale = 0.62 + ringsP * 0.93
 
-      ring1.style.opacity = String(clamp(0, 1, (ringsP - 0.00) * 4))
-      ring2.style.opacity = String(clamp(0, 1, (ringsP - 0.07) * 4))
-      ring3.style.opacity = String(clamp(0, 1, (ringsP - 0.14) * 4))
-      ring4.style.opacity = String(clamp(0, 1, (ringsP - 0.21) * 4))
-      rings.forEach((r) => { r.style.transform = `scale(${ringScale})` })
+      ring1.style.opacity = String(clamp(0, 1, (ringsP + 0.24) * 4))
+      ring2.style.opacity = String(clamp(0, 1, (ringsP + 0.18) * 4))
+      ring3.style.opacity = String(clamp(0, 1, (ringsP + 0.12) * 4))
+      ring4.style.opacity = String(clamp(0, 1, (ringsP + 0.06) * 4))
+      ;[ring1, ring2, ring3, ring4].forEach((r) => {
+        r.style.transform = `scale(${ringScale})`
+      })
     }
 
     tick()
@@ -147,29 +166,114 @@ export function AboutPage() {
         </div>
 
         <div className="about-hero">
-          <div className="about-hero__logo-tile" aria-hidden="true">
-            <KsLogoMark />
+          <div className="about-hero__content">
+            <div className="about-hero__first-line">
+              <div className="about-hero__logo-tile" aria-hidden="true">
+                <KsLogoMark />
+              </div>
+              <span className="about-hero__title-line1">Product manager</span>
+            </div>
+            <p className="about-hero__title-rest">
+              based in India,
+              <br />working globally
+            </p>
           </div>
-          <h1 className="about-hero__title">
-            Product manager
-            <br />based in India,
-            <br />working globally
-          </h1>
         </div>
       </div>
 
-      <section className="about-continued" aria-label="About Koustav">
-        {ABOUT_SECTIONS.map((section) => (
-          <div key={section.id} className="about-section">
-            <h2 className="about-section__heading">{section.heading}</h2>
-            <div className="about-section__body">
-              {section.paragraphs.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+      {/* Two-column about sections */}
+      <section className="about-content" aria-label="About Koustav">
+        <div className="about-content__inner">
+          {ABOUT_SECTIONS.map((section) => (
+            <div key={section.id} className="about-section">
+              <div className="about-section__label-col">
+                <h2 className="about-section__label">{section.label}</h2>
+              </div>
+              <div className="about-section__body-col">
+                {section.body.map((para, i) => (
+                  <p key={i} className="about-section__para">{para}</p>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
+
+      {/* Work Experience */}
+      <section className="workex-section" aria-label="Work Experience">
+        <div className="workex-inner">
+          <h2 className="workex-heading">My Work Experience</h2>
+          <div className="workex-grid">
+
+            <div className="workex-card" data-workex>
+              <div className="workex-card__logo-row">
+                <img src={asset('/logos/adobe.png')} alt="Adobe" className="workex-card__logo-img" />
+                <span className="workex-card__logo-cross">×</span>
+                <img src={asset('/logos/illustrator.png')} alt="Illustrator" className="workex-card__logo-img workex-card__logo-img--icon" />
+              </div>
+              <div className="workex-card__body">
+                <span className="workex-card__role">Product Manager</span>
+                <span className="workex-card__tenure">2023 – Present</span>
+                <p className="workex-card__desc">
+                  Leading GenAI integration on Illustrator — from 0-to-1 launching Turntable to shipping AI-powered vector tools that modernized the world's most powerful design canvas.
+                </p>
+              </div>
+            </div>
+
+            <div className="workex-card workex-card--oracle" data-workex>
+              <div className="workex-card__logo-row">
+                <img src={asset('/logos/oracle.png')} alt="Oracle" className="workex-card__logo-img workex-card__logo-img--wide" />
+              </div>
+              <div className="workex-card__body">
+                <span className="workex-card__role">Associate Consultant</span>
+                <span className="workex-card__tenure">2019 – 2022</span>
+                <p className="workex-card__desc">
+                  Re-architected legacy financial data pipelines using Hadoop and Spark, cutting query times by 50% and delivering 5x faster performance for enterprise banking clients.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Education */}
+      <section className="workex-section edu-section" aria-label="Education">
+        <div className="workex-inner">
+          <h2 className="workex-heading">My Education</h2>
+          <div className="workex-grid">
+
+            <div className="workex-card workex-card--iima" data-workex>
+              <div className="workex-card__logo-row">
+                <img src={asset('/logos/iima.png')} alt="IIM Ahmedabad" className="workex-card__logo-img workex-card__logo-img--iima" />
+              </div>
+              <div className="workex-card__body">
+                <span className="workex-card__role">MBA</span>
+                <span className="workex-card__tenure">Batch of 2024</span>
+                <p className="workex-card__desc">
+                  Indian Institute of Management Ahmedabad — one of the world's premier management institutions. Focused on strategy, product thinking, and business leadership.
+                </p>
+              </div>
+            </div>
+
+            <div className="workex-card workex-card--ju" data-workex>
+              <div className="workex-card__logo-row">
+                <img src={asset('/logos/jadavpur.png')} alt="Jadavpur University" className="workex-card__logo-img workex-card__logo-img--ju" />
+              </div>
+              <div className="workex-card__body">
+                <span className="workex-card__role">B.E. — Electronics Engineering</span>
+                <span className="workex-card__tenure">Batch of 2019</span>
+                <p className="workex-card__desc">
+                  Jadavpur University, Kolkata — specialised in electronic sensors and instrumentation, building a strong foundation in signal processing, hardware systems, and engineering problem-solving.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <ContactSection />
     </>
   )
 }

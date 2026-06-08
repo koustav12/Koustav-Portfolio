@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import './ContactSection.css'
+import { asset } from '../utils/asset'
 
 const EMAIL = 'sahakoustav@gmail.com'
 
@@ -61,7 +62,7 @@ export function ContactSection() {
   }
 
   return (
-    <section className="contact-section" aria-label="Contact">
+    <section id="lets-talk" className="contact-section" aria-label="Contact">
       <div className="contact-section__card">
 
         {/* Top: left-aligned heading + resume CTA */}
@@ -79,11 +80,11 @@ export function ContactSection() {
               onMouseEnter={() => setHoveringCta(true)}
               onMouseLeave={() => setHoveringCta(false)}
             >
-              <a href="/resume.pdf" download className="resume-cta__pill">
+              <a href={asset('/resume.pdf')} download className="resume-cta__pill">
                 <span className="resume-cta__label resume-cta__label--default">Learn more about me</span>
                 <span className="resume-cta__label resume-cta__label--hover">Download resume</span>
               </a>
-              <a href="/resume.pdf" download className="resume-cta__circle" aria-label="Download resume">
+              <a href={asset('/resume.pdf')} download className="resume-cta__circle" aria-label="Download resume">
                 <span className="resume-cta__icon resume-cta__icon--default">→</span>
                 <span className="resume-cta__icon resume-cta__icon--hover"><DownloadIcon /></span>
               </a>

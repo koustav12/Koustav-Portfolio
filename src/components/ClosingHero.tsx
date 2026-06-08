@@ -1,4 +1,5 @@
 import './ClosingHero.css'
+import { asset } from '../utils/asset'
 
 export function ClosingHero() {
   return (
@@ -7,7 +8,7 @@ export function ClosingHero() {
       {/* Background video */}
       <video
         className="closing-hero__video"
-        src="/projects/closing-hero.mp4"
+        src={asset('/projects/closing-hero.mp4')}
         autoPlay
         muted
         loop
